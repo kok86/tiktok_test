@@ -1,200 +1,111 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TikTok Style</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TikTok Clone</title>
   <style>
-    * {margin: 0; padding: 0; box-sizing: border-box;}
-    body, html {
+    html, body {
+      margin: 0;
+      padding: 0;
       height: 100dvh;
       overflow: hidden;
-      background-color: #000;
       font-family: Arial, sans-serif;
+      background-color: black;
     }
 
-    .container {
+    .video-container {
       height: 100dvh;
-      overflow-y: scroll;
-      scroll-snap-type: y mandatory;
-    }
-
-    .video-wrapper {
-      height: 100dvh;
+      width: 100vw;
       position: relative;
-      scroll-snap-align: start;
     }
 
     iframe {
       width: 100vw;
       height: 100dvh;
+      object-fit: cover;
       border: none;
-      position: absolute;
-      top: 0;
-      left: 0;
     }
 
     .overlay {
       position: absolute;
-      bottom: 80px;
-      left: 15px;
-      color: white;
-      z-index: 10;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
     }
 
-    .profile {
+    .sidebar {
+      position: absolute;
+      right: 10px;
+      bottom: 100px;
       display: flex;
+      flex-direction: column;
+      gap: 20px;
       align-items: center;
-      margin-bottom: 5px;
+      pointer-events: auto;
     }
 
-    .profile img {
+    .sidebar img {
       width: 40px;
       height: 40px;
-      border-radius: 50%;
-      margin-right: 10px;
-      border: 2px solid white;
+      filter: drop-shadow(0 0 5px black);
+      cursor: pointer;
     }
 
     .caption {
-      font-size: 14px;
-      max-width: 80%;
-    }
-
-    .icons {
       position: absolute;
-      right: 15px;
-      bottom: 90px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 18px;
-      z-index: 10;
-    }
-
-    .icons svg {
-      width: 28px;
-      height: 28px;
-      fill: white;
-      cursor: pointer;
+      bottom: 60px;
+      left: 10px;
+      color: white;
+      font-size: 14px;
+      text-shadow: 0 0 5px black;
     }
 
     .ad-popup {
       position: absolute;
-      bottom: 140px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(255, 0, 100, 0.9);
-      color: white;
-      padding: 10px 15px;
-      border-radius: 8px;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 10px;
+      border-radius: 10px;
       font-size: 14px;
-      z-index: 10;
-      animation: popUp 0.4s ease-in-out;
+      text-align: center;
+      animation: slideUp 0.5s ease;
+      pointer-events: auto;
+      cursor: pointer;
     }
 
-    @keyframes popUp {
-      from {transform: translateX(-50%) translateY(20px); opacity: 0;}
-      to {transform: translateX(-50%) translateY(0); opacity: 1;}
+    @keyframes slideUp {
+      from { transform: translateY(100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
 
-    <!-- Video 1 -->
-    <div class="video-wrapper">
-      <iframe src="https://customer-7o6zlvriviqc7yeb.cloudflarestream.com/767440f2066bb3a69d70dbb66189ff88/iframe" allow="autoplay; fullscreen" allowfullscreen></iframe>
-      <div class="overlay">
-        <div class="profile">
-          <img src="https://i.pravatar.cc/100?img=5" />
-          <strong>@warungviral</strong>
-        </div>
-        <div class="caption">Promo baru! Diskon besar akhir pekan 🔥</div>
-      </div>
-      <div class="icons">
-        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
-          2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5
-          2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22
-          5.42 22 8.5c0 3.78-3.4 6.86-8.55
-          11.54L12 21.35z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M21 6h-2v9H7v2a1 1 0 0 1-1.6.8L2
-          14.5V5a1 1 0 0 1 1-1h18a1 1 0 0
-          1 1 1v1a1 1 0 0 1-1 1z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M18 16.08c-0.76 0-1.44
-          0.3-1.96 0.77L8.91 12.7a2.5 2.5 0 0
-          0 0-1.39l7.05-4.11A2.5 2.5 0 1 0
-          14.5 5L7.45 9.11a2.5 2.5 0 0 0 0
-          5.78l7.05 4.11a2.5 2.5 0 1 0
-          1.5-2.92z"/></svg>
-      </div>
-      <div class="ad-popup">
-        🎁 Klik di sini untuk dapatkan voucher gratis!
-      </div>
+<div class="video-container">
+  <iframe src="https://customer-7o6zlvriviqc7yeb.cloudflarestream.com/4db8c973d2b2a896c1667064384b3cc8/iframe" allow="autoplay; fullscreen" allowfullscreen></iframe>
+
+  <div class="overlay">
+    <div class="sidebar">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/like.png" alt="Like">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/comments.png" alt="Comment">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/share.png" alt="Share">
     </div>
 
-    <!-- Video 2 -->
-    <div class="video-wrapper">
-      <iframe src="https://customer-7o6zlvriviqc7yeb.cloudflarestream.com/6d426753bf8e59cb7f17ba92f1f54539/iframe" allow="autoplay; fullscreen" allowfullscreen></iframe>
-      <div class="overlay">
-        <div class="profile">
-          <img src="https://i.pravatar.cc/100?img=9" />
-          <strong>@diskon_cepat</strong>
-        </div>
-        <div class="caption">Barang viral mulai Rp9.900! 😱</div>
-      </div>
-      <div class="icons">
-        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
-          2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5
-          2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22
-          5.42 22 8.5c0 3.78-3.4 6.86-8.55
-          11.54L12 21.35z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M21 6h-2v9H7v2a1 1 0 0 1-1.6.8L2
-          14.5V5a1 1 0 0 1 1-1h18a1 1 0 0
-          1 1 1v1a1 1 0 0 1-1 1z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M18 16.08c-0.76 0-1.44
-          0.3-1.96 0.77L8.91 12.7a2.5 2.5 0 0
-          0 0-1.39l7.05-4.11A2.5 2.5 0 1 0
-          14.5 5L7.45 9.11a2.5 2.5 0 0 0 0
-          5.78l7.05 4.11a2.5 2.5 0 1 0
-          1.5-2.92z"/></svg>
-      </div>
-      <div class="ad-popup">
-        📢 Diskon khusus hanya hari ini, klik & klaim!
-      </div>
+    <div class="caption">
+      <strong>@tokoviral</strong><br>
+      Promo diskon akhir bulan! Cek link di bio 🔥
     </div>
 
-    <!-- Video 3 -->
-    <div class="video-wrapper">
-      <iframe src="https://customer-7o6zlvriviqc7yeb.cloudflarestream.com/16429de09d34e277bb8be1fb28b5b86e/iframe" allow="autoplay; fullscreen" allowfullscreen></iframe>
-      <div class="overlay">
-        <div class="profile">
-          <img src="https://i.pravatar.cc/100?img=11" />
-          <strong>@flashdeal</strong>
-        </div>
-        <div class="caption">Gratis ongkir + cashback? Cek sekarang!</div>
-      </div>
-      <div class="icons">
-        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
-          2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5
-          2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22
-          5.42 22 8.5c0 3.78-3.4 6.86-8.55
-          11.54L12 21.35z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M21 6h-2v9H7v2a1 1 0 0 1-1.6.8L2
-          14.5V5a1 1 0 0 1 1-1h18a1 1 0 0
-          1 1 1v1a1 1 0 0 1-1 1z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M18 16.08c-0.76 0-1.44
-          0.3-1.96 0.77L8.91 12.7a2.5 2.5 0 0
-          0 0-1.39l7.05-4.11A2.5 2.5 0 1 0
-          14.5 5L7.45 9.11a2.5 2.5 0 0 0 0
-          5.78l7.05 4.11a2.5 2.5 0 1 0
-          1.5-2.92z"/></svg>
-      </div>
-      <div class="ad-popup">
-        🎊 Belanja sekarang dan dapatkan hadiah langsung!
-      </div>
+    <div class="ad-popup" onclick="window.location.href='https://promo.tokomu.com'">
+      🎁 Dapatkan Diskon 50% Hari Ini! Klik untuk info selengkapnya.
     </div>
-
   </div>
+</div>
+
 </body>
 </html>
