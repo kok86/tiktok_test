@@ -1,111 +1,62 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TikTok Clone</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TikTok Style Video</title>
+
+  <!-- Video.js CSS -->
+  <link href="https://vjs.zencdn.net/8.9.0/video-js.css" rel="stylesheet" />
+  
   <style>
-    html, body {
+    body, html {
       margin: 0;
       padding: 0;
-      height: 100dvh;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
+      height: 100%;
       background-color: black;
+      overflow: hidden;
     }
 
     .video-container {
-      height: 100dvh;
+      height: 100vh;
       width: 100vw;
+      overflow: hidden;
       position: relative;
     }
 
-    iframe {
-      width: 100vw;
-      height: 100dvh;
+    .video-js {
+      height: 100vh !important;
+      width: 100vw !important;
       object-fit: cover;
-      border: none;
     }
 
-    .overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
+    .vjs-control-bar {
+      display: none !important;
     }
 
-    .sidebar {
-      position: absolute;
-      right: 10px;
-      bottom: 100px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      align-items: center;
-      pointer-events: auto;
-    }
-
-    .sidebar img {
-      width: 40px;
-      height: 40px;
-      filter: drop-shadow(0 0 5px black);
-      cursor: pointer;
-    }
-
-    .caption {
-      position: absolute;
-      bottom: 60px;
-      left: 10px;
-      color: white;
-      font-size: 14px;
-      text-shadow: 0 0 5px black;
-    }
-
-    .ad-popup {
-      position: absolute;
-      bottom: 10px;
-      left: 10px;
-      right: 10px;
-      background-color: rgba(255, 255, 255, 0.9);
-      padding: 10px;
-      border-radius: 10px;
-      font-size: 14px;
-      text-align: center;
-      animation: slideUp 0.5s ease;
-      pointer-events: auto;
-      cursor: pointer;
-    }
-
-    @keyframes slideUp {
-      from { transform: translateY(100%); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+    .vjs-big-play-button {
+      display: none !important;
     }
   </style>
 </head>
 <body>
-
-<div class="video-container">
-  <iframe src="https://customer-7o6zlvriviqc7yeb.cloudflarestream.com/4db8c973d2b2a896c1667064384b3cc8/iframe" allow="autoplay; fullscreen" allowfullscreen></iframe>
-
-  <div class="overlay">
-    <div class="sidebar">
-      <img src="https://img.icons8.com/ios-filled/50/ffffff/like.png" alt="Like">
-      <img src="https://img.icons8.com/ios-filled/50/ffffff/comments.png" alt="Comment">
-      <img src="https://img.icons8.com/ios-filled/50/ffffff/share.png" alt="Share">
-    </div>
-
-    <div class="caption">
-      <strong>@tokoviral</strong><br>
-      Promo diskon akhir bulan! Cek link di bio 🔥
-    </div>
-
-    <div class="ad-popup" onclick="window.location.href='https://promo.tokomu.com'">
-      🎁 Dapatkan Diskon 50% Hari Ini! Klik untuk info selengkapnya.
-    </div>
+  <div class="video-container">
+    <video
+      id="cf-tiktok"
+      class="video-js vjs-default-skin"
+      autoplay
+      muted
+      loop
+      playsinline
+    >
+      <source src="https://videodelivery.net/16429de09d34e277bb8be1fb28b5b86e/manifest/video.m3u8" type="application/x-mpegURL" />
+    </video>
   </div>
-</div>
 
+  <!-- Video.js JS -->
+  <script src="https://vjs.zencdn.net/8.9.0/video.min.js"></script>
+  <script>
+    const player = videojs('cf-tiktok');
+  </script>
 </body>
 </html>
