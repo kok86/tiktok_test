@@ -3,18 +3,24 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>TikTok Clone Scrollable</title>
+<title>TikTok Style Scroll Video</title>
 <style>
-  body, html {
-    margin:0; padding:0; height:100%;
+  /* Reset */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  html, body {
+    height: 100%;
+    background: #000;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     overflow: hidden;
-    background: black;
-    font-family: Arial, sans-serif;
+    color: #fff;
   }
   #container {
     height: 100vh;
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
   }
   .video-slide {
     position: relative;
@@ -26,39 +32,89 @@
   iframe {
     width: 100vw;
     height: 100vh;
-    object-fit: cover;
     border: none;
+    object-fit: cover;
   }
-  .icons {
+  /* Overlay gradients */
+  .overlay-top, .overlay-bottom {
     position: absolute;
-    right: 12px;
-    bottom: 120px;
+    width: 100%;
+    left: 0;
+    pointer-events: none;
+    z-index: 5;
+  }
+  .overlay-top {
+    top: 0;
+    height: 120px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
+  }
+  .overlay-bottom {
+    bottom: 0;
+    height: 200px;
+    background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+  }
+  /* Right side icons */
+  .side-icons {
+    position: absolute;
+    bottom: 130px;
+    right: 15px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    color: white;
+    gap: 25px;
     z-index: 10;
-  }
-  .icons svg {
-    width: 30px;
-    height: 30px;
-    fill: white;
-    cursor: pointer;
     user-select: none;
   }
+  .side-icons svg {
+    width: 34px;
+    height: 34px;
+    fill: white;
+    filter: drop-shadow(0 0 2px black);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .side-icons svg:hover {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 5px #f00);
+  }
+  /* Bottom text info */
+  .info {
+    position: absolute;
+    bottom: 60px;
+    left: 15px;
+    max-width: 70vw;
+    z-index: 10;
+    user-select: none;
+    color: #fff;
+  }
+  .username {
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+  .caption {
+    font-size: 1rem;
+    color: #ccc;
+    line-height: 1.2;
+    margin-top: 4px;
+  }
+  /* Ad banner */
   .ad-banner {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background: rgba(255,255,255,0.95);
-    color: black;
+    background: #fff;
+    color: #000;
     text-align: center;
-    padding: 12px;
-    font-weight: bold;
-    font-size: 16px;
-    z-index: 100;
+    padding: 14px 0;
+    font-weight: 600;
+    font-size: 1.1rem;
     cursor: pointer;
     user-select: none;
+    box-shadow: 0 -3px 6px rgba(0,0,0,0.3);
+    transition: background 0.3s ease;
+    z-index: 20;
+  }
+  .ad-banner:hover {
+    background: #eee;
   }
 </style>
 </head>
@@ -67,57 +123,93 @@
 <div id="container"></div>
 
 <div class="ad-banner" onclick="window.open('https://buktijp.win/asia99/', '_blank')">
-  🎁 Promo Spesial: Klik di sini untuk diskon besar!
+  🎁 Klik disini untuk Promo Terbaik Bulan Ini!
 </div>
 
 <script>
-  const streamIDs = [
-    "16429de09d34e277bb8be1fb28b5b86e",
-    "6d426753bf8e59cb7f17ba92f1f54539",
-    "d1a3f4b12e3a4f789f0c25b4524c6f77"
+  const accountId = 'customer-7o6zlvriviqc7yeb';
+  const videos = [
+    {
+      id: '767440f2066bb3a69d70dbb66189ff88',
+      username: '@fajar_ganteng',
+      profilePic: 'https://randomuser.me/api/portraits/men/32.jpg',
+      caption: 'Tips jitu sukses bisnis online, wajib tonton!'
+    },
+    {
+      id: '6d426753bf8e59cb7f17ba92f1f54539',
+      username: '@siti_cantik',
+      profilePic: 'https://randomuser.me/api/portraits/women/44.jpg',
+      caption: 'Rahasia makeup flawless ala selebgram!'
+    },
+    {
+      id: '16429de09d34e277bb8be1fb28b5b86e',
+      username: '@dedi_traveler',
+      profilePic: 'https://randomuser.me/api/portraits/men/85.jpg',
+      caption: 'Liburan seru di Bali, nggak bikin kantong bolong!'
+    }
   ];
 
   const container = document.getElementById('container');
 
-  streamIDs.forEach(id => {
+  videos.forEach(video => {
     const slide = document.createElement('div');
     slide.className = 'video-slide';
 
-    // iframe video
     const iframe = document.createElement('iframe');
-    iframe.src = `https://customer-jg9c2p50tpipj3xi.cloudflarestream.com/${id}/iframe`;
-    iframe.allow =
-      "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen";
+    iframe.src = `https://${accountId}.cloudflarestream.com/${video.id}/iframe`;
+    iframe.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen";
     iframe.allowFullscreen = true;
+    iframe.autoplay = true;
+    iframe.muted = true;
+    iframe.playsInline = true;
 
-    // icons container
-    const icons = document.createElement('div');
-    icons.className = 'icons';
+    const overlayTop = document.createElement('div');
+    overlayTop.className = 'overlay-top';
 
-    // Like icon
-    icons.innerHTML = `
-      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 
-        6.5 3.5 5 5.5 5c1.54 0 3.04.99 
-        3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 
-        5 18.5 5 20 6.5 20 8.5c0 
-        3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-      <svg viewBox="0 0 24 24"><path d="M21 6h-2v9H5v2c0 
-        .55.45 1 1 1h9l4 4V7c0-.55-.45-1-1-1z"/></svg>
-      <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 
-        0-1.44.3-1.96.77L8.91 
-        12.7a3.017 3.017 0 000-1.39l7.05-4.11A2.99 2.99 
-        0 0018 7.91c1.66 0 3-1.34 
-        3-3s-1.34-3-3-3-3 1.34-3 
-        3c0 .24.04.47.09.7L7.03 9.81C6.5 9.3 5.77 9 
-        5 9c-1.66 0-3 1.34-3 3s1.34 3 
-        3 3c.77 0 1.5-.3 
-        2.03-.81l7.06 4.11c-.05.22-.09.45-.09.7 
-        0 1.66 1.34 3 3 
-        3s3-1.34 3-3-1.34-3-3-3z"/></svg>
+    const overlayBottom = document.createElement('div');
+    overlayBottom.className = 'overlay-bottom';
+
+    // Side icons container
+    const sideIcons = document.createElement('div');
+    sideIcons.className = 'side-icons';
+    sideIcons.innerHTML = `
+      <svg viewBox="0 0 24 24" title="Like">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+                 2 6.5 3.5 5 5.5 5c1.54 0 3.04.99 3.57 2.36h1.87
+                 C13.46 5.99 14.96 5 16.5 5 18.5 5 20 6.5 20 8.5
+                 c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+      </svg>
+      <svg viewBox="0 0 24 24" title="Comment">
+        <path d="M21 6h-2v9H5v2c0 .55.45 1 1 1h9l4 4V7c0-.55-.45-1-1-1z"/>
+      </svg>
+      <svg viewBox="0 0 24 24" title="Share">
+        <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91
+                 12.7a3.017 3.017 0 000-1.39l7.05-4.11A2.99 2.99
+                 0 0018 7.91c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3
+                 3c0 .24.04.47.09.7L7.03 9.81C6.5 9.3 5.77 9
+                 5 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.77 0 1.5-.3
+                 2.03-.81l7.06 4.11c-.05.22-.09.45-.09.7
+                 0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3z"/>
+      </svg>
+    `;
+
+    // Info container with profile pic and username
+    const info = document.createElement('div');
+    info.className = 'info';
+    info.innerHTML = `
+      <div style="display:flex; align-items:center; gap:10px;">
+        <img src="${video.profilePic}" alt="${video.username}" style="width:40px; height:40px; border-radius:50%; border:2px solid #fff; object-fit:cover;" />
+        <div class="username">${video.username}</div>
+      </div>
+      <div class="caption">${video.caption}</div>
     `;
 
     slide.appendChild(iframe);
-    slide.appendChild(icons);
+    slide.appendChild(overlayTop);
+    slide.appendChild(overlayBottom);
+    slide.appendChild(sideIcons);
+    slide.appendChild(info);
+
     container.appendChild(slide);
   });
 </script>
